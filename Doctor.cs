@@ -6,35 +6,19 @@ using System.Threading.Tasks;
 
 namespace HMS
 {
-    public class Doctor
+    public class Doctor : Users
     {
-        // Fields to store doctor information
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Email { get; set; }
-        public string Phone { get; set; }
-        public string StreetNumber { get; set; }
-        public string Street { get; set; }
-        public string City { get; set; }
-        public string State { get; set; }
+        public int DoctorID { get; set; }
 
-        // Constructor to initialize the doctor details
-        public Doctor(string firstName, string lastName, string email, string phone, string streetNumber, string street, string city, string state)
+        public Doctor(int doctorID, string firstName, string lastName, string email, string phone, string streetNumber, string street, string city, string state)
+            : base(firstName, lastName, email, phone, streetNumber, street, city, state)
         {
-            FirstName = firstName;
-            LastName = lastName;
-            Email = email;
-            Phone = phone;
-            StreetNumber = streetNumber;
-            Street = street;
-            City = city;
-            State = state;
+            DoctorID = doctorID;
         }
 
-        // Override ToString() to display doctor details in a formatted string
         public override string ToString()
         {
-            return $"{FirstName} {LastName}  | {Email}  | {Phone}  | {StreetNumber} {Street}, {City}, {State}";
+            return $"Doctor ID: {DoctorID}, {base.ToString()}";
         }
 
         // Doctor Menu display

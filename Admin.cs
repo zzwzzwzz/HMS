@@ -93,16 +93,13 @@ namespace HMS
                 foreach (var line in doctorLines)
                 {
                     var parts = line.Split(',');
-                    if (parts.Length == 9)
-                    {
-                        Doctor doctor = new Doctor(parts[1], parts[2], parts[3], parts[4], parts[5], parts[6], parts[7], parts[8]);
-                        // Format the output with fixed-width columns for alignment
-                        Console.WriteLine("{0,-20} | {1,-30} | {2,-12} | {3,-40}",
-                            doctor.FirstName + " " + doctor.LastName,
-                            doctor.Email,
-                            doctor.Phone,
-                            doctor.StreetNumber + " " + doctor.Street + ", " + doctor.City + ", " + doctor.State);
-                    }
+                    // Make sure to pass the Doctor ID as the first argument
+                    Doctor doctor = new Doctor(int.Parse(parts[0]), parts[1], parts[2], parts[3], parts[4], parts[5], parts[6], parts[7], parts[8]);
+                    Console.WriteLine("{0,-20} | {1,-30} | {2,-12} | {3,-40}",
+                        doctor.FirstName + " " + doctor.LastName,
+                        doctor.Email,
+                        doctor.Phone,
+                        doctor.StreetNumber + " " + doctor.Street + ", " + doctor.City + ", " + doctor.State);
                 }
             }
             else
@@ -147,7 +144,7 @@ namespace HMS
                         var parts = line.Split(',');
                         if (parts.Length == 9 && parts[0] == input) // Check if the ID matches
                         {
-                            Doctor doctor = new Doctor(parts[1], parts[2], parts[3], parts[4], parts[5], parts[6], parts[7], parts[8]);
+                            Doctor doctor = new Doctor(int.Parse(parts[0]), parts[1], parts[2], parts[3], parts[4], parts[5], parts[6], parts[7], parts[8]);
 
                             Console.Clear();
                             Console.WriteLine($"\nDetails for Dr. {doctor.FirstName} {doctor.LastName}");
@@ -198,7 +195,7 @@ namespace HMS
                     var parts = line.Split(',');
                     if (parts.Length == 9)
                     {
-                        Patient patient = new Patient(parts[1], parts[2], parts[3], parts[4], parts[5], parts[6], parts[7], parts[8]);
+                        Patient patient = new Patient(int.Parse(parts[0]), parts[1], parts[2], parts[3], parts[4], parts[5], parts[6], parts[7], parts[8]);
                         // Format the output with fixed-width columns for alignment
                         Console.WriteLine("{0,-20} | {1,-30} | {2,-12} | {3,-40}",
                             patient.FirstName + " " + patient.LastName,
@@ -251,7 +248,7 @@ namespace HMS
                         var parts = line.Split(',');
                         if (parts.Length == 9 && parts[0] == input) // Check if the ID matches
                         {
-                            Patient patient = new Patient(parts[1], parts[2], parts[3], parts[4], parts[5], parts[6], parts[7], parts[8]);
+                            Patient patient = new Patient(int.Parse(parts[0]), parts[1], parts[2], parts[3], parts[4], parts[5], parts[6], parts[7], parts[8]);
 
                             Console.Clear();
                             Console.WriteLine($"\nDetails for {patient.FirstName} {patient.LastName}");

@@ -6,33 +6,19 @@ using System.Threading.Tasks;
 
 namespace HMS
 {
-    public class Patient
+    public class Patient : Users
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Email { get; set; }
-        public string Phone { get; set; }
-        public string StreetNumber { get; set; }
-        public string Street { get; set; }
-        public string City { get; set; }
-        public string State { get; set; }
+        public int PatientID { get; set; }
 
-        public Patient(string firstName, string lastName, string email, string phone, string streetNumber, string street, string city, string state)
+        public Patient(int patientID, string firstName, string lastName, string email, string phone, string streetNumber, string street, string city, string state)
+            : base(firstName, lastName, email, phone, streetNumber, street, city, state)
         {
-            FirstName = firstName;
-            LastName = lastName;
-            Email = email;
-            Phone = phone;
-            StreetNumber = streetNumber;
-            Street = street;
-            City = city;
-            State = state;
+            PatientID = patientID;
         }
 
-        // Override ToString() to display the patient details in the required format
         public override string ToString()
         {
-            return $"{FirstName} {LastName}  | {Email}  | {Phone}  | {StreetNumber} {Street}, {City}, {State}";
+            return $"Patient ID: {PatientID}, {base.ToString()}";
         }
 
         // Display patient menu
@@ -66,22 +52,22 @@ namespace HMS
                     case "1":
                         Console.Clear();
                         Console.WriteLine("Patient Details:");
-                        // Logic for displaying patient details
+                        // MyPatientDetail();
                         break;
                     case "2":
                         Console.Clear();
                         Console.WriteLine("Doctor Details:");
-                        // Logic for displaying doctor details
+                        // PatientDoctorDetail();
                         break;
                     case "3":
                         Console.Clear();
                         Console.WriteLine("All Appointments:");
-                        // Logic for listing appointments
+                        // PatientListAppointments();
                         break;
                     case "4":
                         Console.Clear();
                         Console.WriteLine("Book Appointment:");
-                        // Logic for booking appointments
+                        // PatientBookAppointment();
                         break;
                     case "5":
                         Console.Clear();
@@ -96,7 +82,7 @@ namespace HMS
                         break;
                 }
 
-                Console.WriteLine("Press any key to return to the menu...");
+                Console.WriteLine("\nPress any key to return to the menu...");
                 Console.ReadKey();
             }
         }
