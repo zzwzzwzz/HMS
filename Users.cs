@@ -37,5 +37,11 @@ namespace HMS
         {
             return $"{FirstName} {LastName}  | {Email}  | {Phone}  | {StreetNumber} {Street}, {City}, {State}";
         }
+
+        // Overloaded method to display only the full name of the user
+        public void DisplayFullName()
+        {
+            Console.WriteLine($"User: {FirstName} {LastName}");
+        }
     }
 }

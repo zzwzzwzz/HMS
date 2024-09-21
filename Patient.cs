@@ -28,11 +28,9 @@ namespace HMS
             while (!exit)
             {
                 Console.Clear();
-                Console.WriteLine("┌-----------------------------------------------┐");
-                Console.WriteLine("        DOTNET Hospital Management System");
-                Console.WriteLine("│-----------------------------------------------│");
-                Console.WriteLine("                 Patient Menu");
-                Console.WriteLine("└-----------------------------------------------┘");
+
+                // Call the display menu header function from Utils.cs
+                Utils.DisplayMenuHeader("Patient Menu");
 
                 // Display the welcome message with the name
                 Console.WriteLine($"\nWelcome to DOTNET Hospital Management System, {name}!");

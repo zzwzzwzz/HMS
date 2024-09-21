@@ -21,4 +21,9 @@ namespace HMS
             return $"Receptionist ID: {ReceptionistID}, {base.ToString()}";
         }
     }
+
+    //public void ManageAppointments()
+    //{
+    //    // Logic to manage appointments
+    //}
 }

@@ -14,11 +14,8 @@ namespace HMS
             while (!exit)
             {
                 Console.Clear();
-                Console.WriteLine("┌-----------------------------------------------┐");
-                Console.WriteLine("        DOTNET Hospital Management System");
-                Console.WriteLine("│-----------------------------------------------│");
-                Console.WriteLine("                 Admin Menu");
-                Console.WriteLine("└-----------------------------------------------┘");
+                // Call the display menu header function from Utils.cs
+                Utils.DisplayMenuHeader("Admin Menu");
 
                 // Display the welcome message with the name
                 Console.WriteLine($"\nWelcome to DOTNET Hospital Management System, Admin - {name}!");
@@ -76,11 +73,9 @@ namespace HMS
         public static void ListAllDoctors()
         {
             Console.Clear();
-            Console.WriteLine("┌-----------------------------------------------┐");
-            Console.WriteLine("        DOTNET Hospital Management System");
-            Console.WriteLine("│-----------------------------------------------│");
-            Console.WriteLine("                 All Doctors");
-            Console.WriteLine("└-----------------------------------------------┘");
+
+            // Call the display menu header function from Utils.cs
+            Utils.DisplayMenuHeader("All Doctors");
 
             // Set headers with fixed-width formatting
             Console.WriteLine("\nAll doctors registered to the DOTNET Hospital Management System\n");
@@ -116,11 +111,9 @@ namespace HMS
             while (true)  // Keep the loop running until 'n' is pressed
             {
                 Console.Clear();
-                Console.WriteLine("┌-----------------------------------------------┐");
-                Console.WriteLine("        DOTNET Hospital Management System");
-                Console.WriteLine("│-----------------------------------------------│");
-                Console.WriteLine("                 Doctor Details");
-                Console.WriteLine("└-----------------------------------------------┘");
+
+                // Call the display menu header function from Utils.cs
+                Utils.DisplayMenuHeader("Doctor Details");
 
                 Console.Write("\nPlease enter the ID of the doctor whose details you are checking. Or press 'n' to return to menu: ");
                 string? input = Console.ReadLine();
@@ -176,11 +169,9 @@ namespace HMS
         public static void ListAllPatients()
         {
             Console.Clear();
-            Console.WriteLine("┌-----------------------------------------------┐");
-            Console.WriteLine("        DOTNET Hospital Management System");
-            Console.WriteLine("│-----------------------------------------------│");
-            Console.WriteLine("                 All Patients");
-            Console.WriteLine("└-----------------------------------------------┘");
+
+            // Call the display menu header function from Utils.cs
+            Utils.DisplayMenuHeader("All Patients");
 
             // Set headers with fixed-width formatting
             Console.WriteLine("\nAll patients registered to the DOTNET Hospital Management System\n");
@@ -220,11 +211,9 @@ namespace HMS
             while (true)  // Keep the loop running until 'n' is pressed
             {
                 Console.Clear();
-                Console.WriteLine("┌-----------------------------------------------┐");
-                Console.WriteLine("        DOTNET Hospital Management System");
-                Console.WriteLine("│-----------------------------------------------│");
-                Console.WriteLine("                 Patient Details");
-                Console.WriteLine("└-----------------------------------------------┘");
+
+                // Call the display menu header function from Utils.cs
+                Utils.DisplayMenuHeader("Patient Details");
 
                 Console.Write("\nPlease enter the ID of the patient whose details you are checking. Or press 'n' to return to menu: ");
                 string? input = Console.ReadLine();

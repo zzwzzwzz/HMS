@@ -10,6 +10,17 @@ namespace HMS
 {
     public static class Utils
     {
+        // Display repetitive menu header
+        public static void DisplayMenuHeader(string menuTitle)
+        {
+            Console.Clear();
+            Console.WriteLine("┌-----------------------------------------------┐");
+            Console.WriteLine("        DOTNET Hospital Management System");
+            Console.WriteLine("│-----------------------------------------------│");
+            Console.WriteLine($"                    {menuTitle}");
+            Console.WriteLine("└-----------------------------------------------┘");
+        }
+
         // Validate the ID and password
         public static (string? name, string? role) ValidateCredentials(string id, string password)
         {

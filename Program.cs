@@ -17,11 +17,9 @@ namespace HMS
                 while (role == null)
                 {
                     Console.Clear();
-                    Console.WriteLine("┌-----------------------------------------------┐");
-                    Console.WriteLine("        DOTNET Hospital Management System");
-                    Console.WriteLine("│-----------------------------------------------│");
-                    Console.WriteLine("                      Login");
-                    Console.WriteLine("└-----------------------------------------------┘");
+
+                    // Call the display menu header function from Utils.cs
+                    Utils.DisplayMenuHeader("Login");
 
                     // Get the ID
                     Console.Write("\nID: ");
