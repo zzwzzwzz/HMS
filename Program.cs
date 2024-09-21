@@ -118,7 +118,7 @@ namespace HMS
         // Function to validate the ID and password 
         private static (string? name, string? role) ValidateCredentials(string id, string password)
         {
-            string filePath = @"..\..\..\users.txt";
+            string filePath = @"Users.txt";
             string[] lines = File.ReadAllLines(filePath);
 
             foreach (var line in lines)

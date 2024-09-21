@@ -1,3 +1,0 @@
-111111,111111,Lucy,Admin
-222222,222222,Mary,Patient
-333333,333333,Max,Doctor

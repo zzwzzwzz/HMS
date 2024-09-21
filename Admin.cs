@@ -58,14 +58,10 @@ namespace HMS
                         // Logic to check patient details
                         break;
                     case "5":
-                        Console.Clear();
-                        Console.WriteLine("Add Doctor:");
-                        // Logic to add a new doctor
+                        AddDoctor();
                         break;
                     case "6":
-                        Console.Clear();
-                        Console.WriteLine("Add Patient:");
-                        // Logic to add a new patient
+                        AddPatient();
                         break;
                     case "7":
                         exit = true; // Logout and return to the login screen
@@ -81,6 +77,54 @@ namespace HMS
                 Console.WriteLine("Press any key to return to the menu...");
                 Console.ReadKey();
             }
+        }
+
+        // Method to add a new doctor
+        public static void AddDoctor()
+        {
+            Console.Clear();
+            Console.WriteLine("Registering a new doctor with the DOTNET Hospital Management System");
+
+            string firstName = Utils.GetNonNullInput("First Name: ");
+            string lastName = Utils.GetNonNullInput("Last Name: ");
+            string email = Utils.GetValidEmailInput("Email: ");  // Call GetValidEmailInput
+            string phone = Utils.GetValidPhoneInput("Phone: ");  // Call GetValidPhoneInput
+            string streetNumber = Utils.GetNonNullInput("Street Number: ");
+            string street = Utils.GetNonNullInput("Street: ");
+            string city = Utils.GetNonNullInput("City: ");
+            string state = Utils.GetNonNullInput("State: ");
+
+            // Write to the DoctorsDetail.txt file
+            string doctorDetails = $"{firstName},{lastName},{email},{phone},{streetNumber},{street},{city},{state}";
+            File.AppendAllText("DoctorsDetail.txt", doctorDetails + Environment.NewLine);
+
+            Console.WriteLine($"\nDr {firstName} {lastName} added to the system!");
+            Console.WriteLine("Press any key to return to the menu...");
+            Console.ReadKey();
+        }
+
+        // Method to add a new patient
+        public static void AddPatient()
+        {
+            Console.Clear();
+            Console.WriteLine("Registering a new patient with the DOTNET Hospital Management System");
+
+            string firstName = Utils.GetNonNullInput("First Name: ");
+            string lastName = Utils.GetNonNullInput("Last Name: ");
+            string email = Utils.GetValidEmailInput("Email: ");  // Call GetValidEmailInput
+            string phone = Utils.GetValidPhoneInput("Phone: ");  // Call GetValidPhoneInput
+            string streetNumber = Utils.GetNonNullInput("Street Number: ");
+            string street = Utils.GetNonNullInput("Street: ");
+            string city = Utils.GetNonNullInput("City: ");
+            string state = Utils.GetNonNullInput("State: ");
+
+            // Write to the PatientsDetail.txt file
+            string patientDetails = $"{firstName},{lastName},{email},{phone},{streetNumber},{street},{city},{state}";
+            File.AppendAllText("PatientsDetail.txt", patientDetails + Environment.NewLine);
+
+            Console.WriteLine($"\n{firstName} {lastName} added to the system!");
+            Console.WriteLine("Press any key to return to the menu...");
+            Console.ReadKey();
         }
     }
 }
