@@ -55,7 +55,7 @@ namespace HMS
                     case "2":
                         Console.Clear();
                         Console.WriteLine("Doctor Details:");
-                        // PatientDoctorDetail();
+                        // PatientListDoctorDetail();
                         break;
                     case "3":
                         Console.Clear();

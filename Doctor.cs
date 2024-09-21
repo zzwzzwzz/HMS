@@ -51,27 +51,27 @@ namespace HMS
                     case "1":
                         Console.Clear();
                         Console.WriteLine("Doctor Details:");
-                        // Logic for displaying doctor details
+                        // DoctorListDetail();
                         break;
                     case "2":
                         Console.Clear();
                         Console.WriteLine("List Patients:");
-                        // Logic for listing patients
+                        // DoctorListPatients();
                         break;
                     case "3":
                         Console.Clear();
                         Console.WriteLine("List Appointments:");
-                        // Logic for listing appointments
+                        // DoctorListAllAppointments();
                         break;
                     case "4":
                         Console.Clear();
                         Console.WriteLine("Check Particular Patient:");
-                        // Logic for checking particular patient
+                        // DoctorCheckPatient();
                         break;
                     case "5":
                         Console.Clear();
                         Console.WriteLine("List Appointments with Patient:");
-                        // Logic for listing appointments with a specific patient
+                        // DoctorListPatientAppointments();
                         break;
                     case "6":
                         Console.Clear();
