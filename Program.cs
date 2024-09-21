@@ -13,7 +13,7 @@ namespace HMS
             {
                 string? name = null;
                 string? role = null;
-                Patient? currentPatient = null;
+                object? currentUser = null;  // Can be either Patient or Doctor
 
                 while (role == null)
                 {
@@ -37,7 +37,7 @@ namespace HMS
                     string inputPassword = GetPassword();
 
                     // Call the ValidateCredentials method from Utils.cs
-                    (name, role, currentPatient) = Utils.ValidateCredentials(inputID, inputPassword);
+                    (name, role, currentUser) = Utils.ValidateCredentials(inputID, inputPassword);
 
                     if (role == null)
                     {
@@ -57,16 +57,18 @@ namespace HMS
                     Console.Clear();
                     Admin.AdminMenu(name);
                 }
-                else if (role == "Patient")
+                else if (role == "Patient" && currentUser is Patient currentPatient)
                 {
-                    if (currentPatient != null)
+                    if (string.IsNullOrEmpty(name))
                     {
-                        Console.Clear();
-                        // Pass the patient object to the PatientMenu method
-                        Patient.PatientMenu(currentPatient);
+                        name = "Patient";
                     }
+
+                    Console.Clear();
+                    // Pass the patient object to the PatientMenu method
+                    Patient.PatientMenu(currentPatient);
                 }
-                else if (role == "Doctor")
+                else if (role == "Doctor" && currentUser is Doctor currentDoctor)
                 {
                     if (string.IsNullOrEmpty(name))
                     {
@@ -74,7 +76,8 @@ namespace HMS
                     }
 
                     Console.Clear();
-                    Doctor.DoctorMenu(name);
+                    // Pass the doctor object to the DoctorMenu method
+                    Doctor.DoctorMenu(currentDoctor);
                 }
 
                 // After exiting from the menu, reset the role to null to show the login again.

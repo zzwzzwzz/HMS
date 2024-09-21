@@ -22,7 +22,7 @@ namespace HMS
         }
 
         // Doctor Menu display
-        public static void DoctorMenu(string name)
+        public static void DoctorMenu(Doctor currentDoctor)
         {
             bool exit = false;
             while (!exit)
@@ -33,7 +33,7 @@ namespace HMS
                 Utils.DisplayMenuHeader("Doctor Menu");
 
                 // Display the welcome message with the name
-                Console.WriteLine($"\nWelcome to DOTNET Hospital Management System, Dr. {name}!");
+                Console.WriteLine($"\nWelcome to DOTNET Hospital Management System, Dr. {currentDoctor.FirstName} {currentDoctor.LastName}!");
 
                 // Display the Doctor Menu details
                 Console.WriteLine("\nPlease choose an option:");
@@ -43,15 +43,14 @@ namespace HMS
                 Console.WriteLine("4. Check particular patient");
                 Console.WriteLine("5. List appointments with patient");
                 Console.WriteLine("6. Logout");
-                Console.WriteLine("7. Exit");
+                Console.WriteLine("7. Exit\n");
 
                 string? choice = Console.ReadLine();
                 switch (choice)
                 {
                     case "1":
                         Console.Clear();
-                        Console.WriteLine("Doctor Details:");
-                        // DoctorListDetail();
+                        DoctorListDetail(currentDoctor);
                         break;
                     case "2":
                         Console.Clear();
@@ -86,11 +85,30 @@ namespace HMS
                         Console.WriteLine("Invalid input, please try again.");
                         break;
                 }
-
-                Console.WriteLine("Press any key to return to the menu...");
-                Console.ReadKey();
             }
         }
+
+        public static void DoctorListDetail(Doctor currentDoctor)
+        {
+            Console.Clear();
+
+            // Call the display menu header function from Utils.cs
+            Utils.DisplayMenuHeader("My Details");
+
+            // Display the doctor details in the required format
+            Console.WriteLine("\nDoctor Details:\n");
+            Console.WriteLine("{0,-20} | {1,-30} | {2,-12} | {3,-40}", "Name", "Email Address", "Phone", "Address");
+            Console.WriteLine(new string('-', 110)); // Divider line
+            Console.WriteLine("{0,-20} | {1,-30} | {2,-12} | {3,-40}",
+                currentDoctor.FirstName + " " + currentDoctor.LastName,
+                currentDoctor.Email,
+                currentDoctor.Phone,
+                currentDoctor.StreetNumber + " " + currentDoctor.Street + ", " + currentDoctor.City + ", " + currentDoctor.State);
+
+            Console.WriteLine("\nPress any key to return to the menu...");
+            Console.ReadKey(true);
+        }
+
     }
 }
 

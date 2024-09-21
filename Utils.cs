@@ -21,8 +21,8 @@ namespace HMS
             Console.WriteLine("└-----------------------------------------------┘");
         }
 
-        // Validate the ID and password
-        public static (string? name, string? role, Patient? patient) ValidateCredentials(string id, string password)
+        // Validate the ID and password for both patients and doctors
+        public static (string? name, string? role, object? user) ValidateCredentials(string id, string password)
         {
             string userFilePath = @"Users.txt";
             string[] lines = File.ReadAllLines(userFilePath);
@@ -52,9 +52,20 @@ namespace HMS
                                 return (validUsername, validRole, patient);
                             }
                         }
+                        else if (validRole == "Doctor")
+                        {
+                            // Load the doctor details from DoctorsDetail.txt
+                            Doctor? doctor = GetDoctorDetailsById(validID);
+
+                            if (doctor != null)
+                            {
+                                // Return name, role, and doctor object
+                                return (validUsername, validRole, doctor);
+                            }
+                        }
                         else
                         {
-                            // Return name and role for non-patient users
+                            // Return name and role for non-patient and non-doctor users
                             return (validUsername, validRole, null);
                         }
                     }
@@ -64,6 +75,7 @@ namespace HMS
             // Return null if validation fails
             return (null, null, null);
         }
+
 
         // Load patient details from PatientDetails.txt
         public static Patient? GetPatientDetailsById(string id)
@@ -96,6 +108,40 @@ namespace HMS
             }
 
             // Return null if no patient is found with the ID
+            return null;
+        }
+
+        // Load doctor details from DoctorsDetail.txt
+        public static Doctor? GetDoctorDetailsById(string id)
+        {
+            string doctorFilePath = @"DoctorsDetail.txt";
+            string[] doctorLines = File.ReadAllLines(doctorFilePath);
+
+            foreach (var line in doctorLines)
+            {
+                var parts = line.Split(',');
+                if (parts.Length == 9)
+                {
+                    // Check if the doctor ID matches
+                    if (parts[0] == id)
+                    {
+                        // Create a Doctor object with the details
+                        return new Doctor(
+                            int.Parse(parts[0]), // DoctorID
+                            parts[1], // FirstName
+                            parts[2], // LastName
+                            parts[3], // Email
+                            parts[4], // Phone
+                            parts[5], // StreetNumber
+                            parts[6], // Street
+                            parts[7], // City
+                            parts[8]  // State
+                        );
+                    }
+                }
+            }
+
+            // Return null if no doctor is found with the ID
             return null;
         }
 

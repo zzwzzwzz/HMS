@@ -49,7 +49,6 @@ namespace HMS
                 {
                     case "1":
                         Console.Clear();
-                        Console.WriteLine("Patient Details:");
                         PatientListDetail(currentPatient);
                         break;
                     case "2":
@@ -91,7 +90,7 @@ namespace HMS
             Utils.DisplayMenuHeader("My Details");
 
             // Display the patient details
-            Console.WriteLine($"{currentPatient.FirstName} {currentPatient.LastName}'s Details\n");
+            Console.WriteLine($"\n{currentPatient.FirstName} {currentPatient.LastName}'s Details:\n");
             Console.WriteLine($"Patient ID: {currentPatient.PatientID}");
             Console.WriteLine($"Full Name: {currentPatient.FirstName} {currentPatient.LastName}");
             Console.WriteLine($"Address: {currentPatient.StreetNumber} {currentPatient.Street}, {currentPatient.City}, {currentPatient.State}");
