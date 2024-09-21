@@ -10,10 +10,65 @@ namespace HMS
 {
     public static class Utils
     {
-        private static int currentPatientId = 222222;
-        private static int currentDoctorId = 333333;
+        // Validate the ID and password
+        public static (string? name, string? role) ValidateCredentials(string id, string password)
+        {
+            string filePath = @"Users.txt";
+            string[] lines = File.ReadAllLines(filePath);
+
+            foreach (var line in lines)
+            {
+                var parts = line.Split(',');
+                if (parts.Length == 4)
+                {
+                    string validID = parts[0];
+                    string validPassword = parts[1];
+                    string validUsername = parts[2];
+                    string validRole = parts[3];
+
+                    if (id == validID && password == validPassword)
+                    {
+                        // Return the name and role
+                        return (validUsername, validRole);
+                    }
+                }
+            }
+
+            // Return null if validation fails
+            return (null, null);
+        }
+
+        // Function to read the password with '*' masking
+        public static string GetPassword()
+        {
+            string password = "";
+            ConsoleKey key;
+
+            do
+            {
+                var keyInfo = Console.ReadKey(intercept: true);
+                key = keyInfo.Key;
+
+                if (key == ConsoleKey.Backspace && password.Length > 0)
+                {
+                    // Erase the last '*' and remove the last character
+                    Console.Write("\b \b");
+                    password = password[0..^1];
+                }
+                else if (!char.IsControl(keyInfo.KeyChar))
+                {
+                    Console.Write("*");
+                    password += keyInfo.KeyChar;
+                }
+            } while (key != ConsoleKey.Enter);
+
+            Console.WriteLine();
+            return password;
+        }
 
         // Generate the next patient ID, ensuring it's unique
+        private static int currentPatientId = 222222;
+
         public static int GeneratePatientId()
         {
             int newId;
@@ -26,6 +81,8 @@ namespace HMS
         }
 
         // Generate the next doctor ID, ensuring it's unique
+        private static int currentDoctorId = 333333;
+
         public static int GenerateDoctorId()
         {
             int newId;

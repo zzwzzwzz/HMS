@@ -39,22 +39,18 @@ namespace HMS
                 {
                     case "1":
                         Console.Clear();
-                        Console.WriteLine("List All Doctors:");
                         ListAllDoctors();
                         break;
                     case "2":
                         Console.Clear();
-                        Console.WriteLine("Check Doctor Details:");
                         CheckDoctorDetail();
                         break;
                     case "3":
                         Console.Clear();
-                        Console.WriteLine("List All Patients:");
                         ListAllPatients();
                         break;
                     case "4":
                         Console.Clear();
-                        Console.WriteLine("Check Patient Details:");
                         CheckPatientDetail();
                         break;
                     case "5":
@@ -65,7 +61,7 @@ namespace HMS
                         break;
                     case "7":
                         exit = true; // Logout and return to the login screen
-                        break;
+                        return;
                     case "8":
                         Environment.Exit(0);  // Exit the program
                         break;
@@ -87,7 +83,7 @@ namespace HMS
             Console.WriteLine("└-----------------------------------------------┘");
 
             // Set headers with fixed-width formatting
-            Console.WriteLine("\nAll doctors registered to the DOTNET Hospital Management System");
+            Console.WriteLine("\nAll doctors registered to the DOTNET Hospital Management System\n");
             Console.WriteLine("{0,-20} | {1,-30} | {2,-12} | {3,-40}", "Name", "Email Address", "Phone", "Address");
             Console.WriteLine(new string('-', 110)); // Divider line
 
@@ -111,10 +107,10 @@ namespace HMS
             }
             else
             {
-                Console.WriteLine("No doctors found in the system.");
+                Console.WriteLine("\nNo doctors found in the system.");
             }
 
-            Console.WriteLine("Press any key to return to the menu...");
+            Console.WriteLine("\nPress any key to return to the menu...");
             Console.ReadKey(true);
         }
 
@@ -179,7 +175,6 @@ namespace HMS
             }
         }
 
-
         // Function to list all the patients information
         public static void ListAllPatients()
         {
@@ -191,7 +186,7 @@ namespace HMS
             Console.WriteLine("└-----------------------------------------------┘");
 
             // Set headers with fixed-width formatting
-            Console.WriteLine("\nAll patients registered to the DOTNET Hospital Management System");
+            Console.WriteLine("\nAll patients registered to the DOTNET Hospital Management System\n");
             Console.WriteLine("{0,-20} | {1,-30} | {2,-12} | {3,-40}", "Patient", "Email Address", "Phone", "Address");
             Console.WriteLine(new string('-', 110)); // Divider line
 
@@ -284,13 +279,11 @@ namespace HMS
             }
         }
 
-
-
         // Function to add a new doctor
         public static void AddDoctor()
         {
             Console.Clear();
-            Console.WriteLine("Registering a new doctor with the DOTNET Hospital Management System");
+            Console.WriteLine("Registering a new doctor with the DOTNET Hospital Management System:\n");
 
             int doctorID = Utils.GenerateDoctorId(); // Generate a unique doctor ID
             string firstName = Utils.GetNonNullInput("First Name: ");
@@ -315,7 +308,7 @@ namespace HMS
         public static void AddPatient()
         {
             Console.Clear();
-            Console.WriteLine("Registering a new patient with the DOTNET Hospital Management System");
+            Console.WriteLine("Registering a new patient with the DOTNET Hospital Management System:\n");
 
             int patientID = Utils.GeneratePatientId(); // Generate a unique patient ID
             string firstName = Utils.GetNonNullInput("First Name: ");
@@ -332,7 +325,7 @@ namespace HMS
             File.AppendAllText("PatientsDetail.txt", patientDetails + Environment.NewLine);
 
             Console.WriteLine($"\n{firstName} {lastName} added to the system!");
-            Console.WriteLine("Press any key to return to the menu...");
+            Console.WriteLine("\nPress any key to return to the menu...");
             Console.ReadKey(true);
         }
     }

@@ -7,85 +7,82 @@ namespace HMS
     {
         static void Main(string[] args)
         {
-            string? name = null;
-            string? role = null;
+            bool loggedIn = false;
 
-            while (role == null)
+            while (!loggedIn)
             {
-                Console.Clear();
-                Console.WriteLine("┌-----------------------------------------------┐");
-                Console.WriteLine("        DOTNET Hospital Management System");
-                Console.WriteLine("│-----------------------------------------------│");
-                Console.WriteLine("                      Login");
-                Console.WriteLine("└-----------------------------------------------┘");
+                string? name = null;
+                string? role = null;
 
-                // Get the ID
-                Console.Write("\nID: ");
-                string? inputID = Console.ReadLine();
-
-                if (inputID == null)
+                while (role == null)
                 {
-                    Console.WriteLine("ID cannot be null. Please try again.");
-                    return;
+                    Console.Clear();
+                    Console.WriteLine("┌-----------------------------------------------┐");
+                    Console.WriteLine("        DOTNET Hospital Management System");
+                    Console.WriteLine("│-----------------------------------------------│");
+                    Console.WriteLine("                      Login");
+                    Console.WriteLine("└-----------------------------------------------┘");
+
+                    // Get the ID
+                    Console.Write("\nID: ");
+                    string? inputID = Console.ReadLine();
+
+                    if (string.IsNullOrEmpty(inputID))
+                    {
+                        Console.WriteLine("ID cannot be null. Please try again.");
+                        continue;
+                    }
+
+                    // Get the password
+                    Console.Write("Password: ");
+                    string inputPassword = GetPassword();
+
+                    // Call the ValidateCredentials method from Utils.cs
+                    (name, role) = Utils.ValidateCredentials(inputID, inputPassword);
+
+                    if (role == null)
+                    {
+                        Console.WriteLine("\nInvalid credentials. Please try again.");
+                        Console.WriteLine("\nPress any key to retry...");
+                        Console.ReadKey();
+                    }
                 }
 
-                // Get the password
-                Console.Write("Password: ");
-                string inputPassword = GetPassword();
-
-                // Validate the credentials and get the name and role
-                (name, role) = ValidateCredentials(inputID, inputPassword);
-
-                if (role == null)
+                // Redirect to other menu based on the role
+                if (role == "Admin")
                 {
-                    Console.WriteLine("\nInvalid credentials. Please try again.");
-                    Console.WriteLine("Press any key to retry...");
-                    Console.ReadKey();
+                    if (string.IsNullOrEmpty(name))
+                    {
+                        name = "Admin";
+                    }
+                    Console.Clear();
+                    Admin.AdminMenu(name);
                 }
-            }
+                else if (role == "Patient")
+                {
+                    if (string.IsNullOrEmpty(name))
+                    {
+                        name = "Patient";
+                    }
 
-            // Redirect to other menu based on the role
-            if (role == "Admin")
-            {
-                if (string.IsNullOrEmpty(name))
-                {
-                    name = "Admin";
+                    Console.Clear();
+                    Patient.PatientMenu(name);
                 }
-                Console.Clear();
-                Admin.AdminMenu(name);
-            }
-            else if (role == "Patient")
-            {
-                // If the name is null or empty, replace it with defalut "Patient"
-                if (string.IsNullOrEmpty(name))
+                else if (role == "Doctor")
                 {
-                    name = "Patient";  
+                    if (string.IsNullOrEmpty(name))
+                    {
+                        name = "Doctor";
+                    }
+
+                    Console.Clear();
+                    Doctor.DoctorMenu(name);
                 }
 
-                Console.Clear();
-
-                // Pass the name to the PatientMenu method
-                Patient.PatientMenu(name);
-            }
-            else if (role == "Doctor")
-            {
-                // If the name is null or empty, replace it with "Doctor"
-                if (string.IsNullOrEmpty(name))
-                {
-                    name = "Doctor";
-                }
-
-                Console.Clear();
-                // Pass the name to the DoctorMenu method
-                Doctor.DoctorMenu(name);
-            }
-            else
-            {
-                // Need to change this later
-                Console.WriteLine("Welcome to the system!");
+                // After exiting from the menu, reset the role to null to show the login again.
+                role = null;
             }
         }
-
 
         // Function to read the password with '*' masking
         private static string GetPassword()
@@ -113,34 +110,6 @@ namespace HMS
 
             Console.WriteLine();
             return password;
-        }
-
-        // Function to validate the ID and password 
-        private static (string? name, string? role) ValidateCredentials(string id, string password)
-        {
-            string filePath = @"Users.txt";
-            string[] lines = File.ReadAllLines(filePath);
-
-            foreach (var line in lines)
-            {
-                var parts = line.Split(',');
-                if (parts.Length == 4)
-                {
-                    string validID = parts[0];
-                    string validPassword = parts[1];
-                    string validUsername = parts[2];
-                    string validRole = parts[3];
-
-                    if (id == validID && password == validPassword)
-                    {
-                        // Return the name and role
-                        return (validUsername, validRole);  
-                    }
-                }
-            }
-
-            // Return null if validation fails
-            return (null, null);  
         }
     }
 }
