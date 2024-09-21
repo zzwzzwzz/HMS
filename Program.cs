@@ -33,7 +33,7 @@ namespace HMS
                 Console.Write("Password: ");
                 string inputPassword = GetPassword();
 
-                // Validate the credentials and get the name and role (deconstruct the tuple)
+                // Validate the credentials and get the name and role
                 (name, role) = ValidateCredentials(inputID, inputPassword);
 
                 if (role == null)
@@ -45,7 +45,16 @@ namespace HMS
             }
 
             // Redirect to other menu based on the role
-            if (role == "Patient")
+            if (role == "Admin")
+            {
+                if (string.IsNullOrEmpty(name))
+                {
+                    name = "Admin";
+                }
+                Console.Clear();
+                Admin.AdminMenu(name);
+            }
+            else if (role == "Patient")
             {
                 // If the name is null or empty, replace it with defalut "Patient"
                 if (string.IsNullOrEmpty(name))
@@ -57,6 +66,18 @@ namespace HMS
 
                 // Pass the name to the PatientMenu method
                 Patient.PatientMenu(name);
+            }
+            else if (role == "Doctor")
+            {
+                // If the name is null or empty, replace it with "Doctor"
+                if (string.IsNullOrEmpty(name))
+                {
+                    name = "Doctor";
+                }
+
+                Console.Clear();
+                // Pass the name to the DoctorMenu method
+                Doctor.DoctorMenu(name);
             }
             else
             {
@@ -112,12 +133,14 @@ namespace HMS
 
                     if (id == validID && password == validPassword)
                     {
-                        return (validUsername, validRole);  // Return the name and role
+                        // Return the name and role
+                        return (validUsername, validRole);  
                     }
                 }
             }
 
-            return (null, null);  // Return null if validation fails
+            // Return null if validation fails
+            return (null, null);  
         }
     }
 }
