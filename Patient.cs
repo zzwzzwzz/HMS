@@ -22,7 +22,7 @@ namespace HMS
         }
 
         // Display patient menu
-        public static void PatientMenu(string name) 
+        public static void PatientMenu(Patient currentPatient) 
         {
             bool exit = false;
             while (!exit)
@@ -33,7 +33,7 @@ namespace HMS
                 Utils.DisplayMenuHeader("Patient Menu");
 
                 // Display the welcome message with the name
-                Console.WriteLine($"\nWelcome to DOTNET Hospital Management System, {name}!");
+                Console.WriteLine($"\nWelcome to DOTNET Hospital Management System, {currentPatient.FirstName} {currentPatient.LastName}!");
 
                 // Display the Patient Menu detail
                 Console.WriteLine("\nPlease choose an option:");
@@ -42,7 +42,7 @@ namespace HMS
                 Console.WriteLine("3. List all appointments");
                 Console.WriteLine("4. Book appointment");
                 Console.WriteLine("5. Exit to login");
-                Console.WriteLine("6. Exit System");
+                Console.WriteLine("6. Exit System\n");
 
                 string? choice = Console.ReadLine();
                 switch (choice)
@@ -50,7 +50,7 @@ namespace HMS
                     case "1":
                         Console.Clear();
                         Console.WriteLine("Patient Details:");
-                        // MyPatientDetail();
+                        PatientListDetail(currentPatient);
                         break;
                     case "2":
                         Console.Clear();
@@ -79,10 +79,27 @@ namespace HMS
                         Console.WriteLine("Invalid input, please try again.");
                         break;
                 }
-
-                Console.WriteLine("\nPress any key to return to the menu...");
-                Console.ReadKey();
             }
+        }
+
+        // Case 1 function for patient to check their own detail
+        public static void PatientListDetail(Patient currentPatient)
+        {
+            Console.Clear();
+
+            // Call the display menu header function from Utils.cs
+            Utils.DisplayMenuHeader("My Details");
+
+            // Display the patient details
+            Console.WriteLine($"{currentPatient.FirstName} {currentPatient.LastName}'s Details\n");
+            Console.WriteLine($"Patient ID: {currentPatient.PatientID}");
+            Console.WriteLine($"Full Name: {currentPatient.FirstName} {currentPatient.LastName}");
+            Console.WriteLine($"Address: {currentPatient.StreetNumber} {currentPatient.Street}, {currentPatient.City}, {currentPatient.State}");
+            Console.WriteLine($"Email: {currentPatient.Email}");
+            Console.WriteLine($"Phone: {currentPatient.Phone}");
+
+            Console.WriteLine("\nPress any key to return to the menu...");
+            Console.ReadKey(true);
         }
     }
 }

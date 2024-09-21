@@ -13,6 +13,7 @@ namespace HMS
             {
                 string? name = null;
                 string? role = null;
+                Patient? currentPatient = null;
 
                 while (role == null)
                 {
@@ -36,7 +37,7 @@ namespace HMS
                     string inputPassword = GetPassword();
 
                     // Call the ValidateCredentials method from Utils.cs
-                    (name, role) = Utils.ValidateCredentials(inputID, inputPassword);
+                    (name, role, currentPatient) = Utils.ValidateCredentials(inputID, inputPassword);
 
                     if (role == null)
                     {
@@ -58,13 +59,12 @@ namespace HMS
                 }
                 else if (role == "Patient")
                 {
-                    if (string.IsNullOrEmpty(name))
+                    if (currentPatient != null)
                     {
-                        name = "Patient";
+                        Console.Clear();
+                        // Pass the patient object to the PatientMenu method
+                        Patient.PatientMenu(currentPatient);
                     }
-
-                    Console.Clear();
-                    Patient.PatientMenu(name);
                 }
                 else if (role == "Doctor")
                 {
