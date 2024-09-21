@@ -8,6 +8,34 @@ namespace HMS
 {
     public class Patient
     {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Email { get; set; }
+        public string Phone { get; set; }
+        public string StreetNumber { get; set; }
+        public string Street { get; set; }
+        public string City { get; set; }
+        public string State { get; set; }
+
+        public Patient(string firstName, string lastName, string email, string phone, string streetNumber, string street, string city, string state)
+        {
+            FirstName = firstName;
+            LastName = lastName;
+            Email = email;
+            Phone = phone;
+            StreetNumber = streetNumber;
+            Street = street;
+            City = city;
+            State = state;
+        }
+
+        // Override ToString() to display the patient details in the required format
+        public override string ToString()
+        {
+            return $"{FirstName} {LastName}  | {Email}  | {Phone}  | {StreetNumber} {Street}, {City}, {State}";
+        }
+
+        // Display patient menu
         public static void PatientMenu(string name) 
         {
             bool exit = false;
