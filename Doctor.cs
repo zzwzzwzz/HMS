@@ -95,7 +95,7 @@ namespace HMS
                         Console.Clear();
                         // Return to login
                         exit = true; 
-                        break;
+                        return;
                     case "7":
                         // Exit the program
                         Environment.Exit(0);  
