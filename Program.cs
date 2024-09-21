@@ -7,10 +7,10 @@ namespace HMS
     {
         static void Main(string[] args)
         {
-            bool loginSuccess = false;
+            string? name = null;
+            string? role = null;
 
-            // Keep showing login until valid credentials
-            while (!loginSuccess)
+            while (role == null)
             {
                 Console.Clear();
                 Console.WriteLine("┌-----------------------------------------------┐");
@@ -23,7 +23,6 @@ namespace HMS
                 Console.Write("\nID: ");
                 string? inputID = Console.ReadLine();
 
-                // Check if the ID is null
                 if (inputID == null)
                 {
                     Console.WriteLine("ID cannot be null. Please try again.");
@@ -34,24 +33,38 @@ namespace HMS
                 Console.Write("Password: ");
                 string inputPassword = GetPassword();
 
-                // Validate the credentials
-                loginSuccess = ValidateCredentials(inputID, inputPassword);
+                // Validate the credentials and get the name and role (deconstruct the tuple)
+                (name, role) = ValidateCredentials(inputID, inputPassword);
 
-                if (!loginSuccess)
+                if (role == null)
                 {
                     Console.WriteLine("\nInvalid credentials. Please try again.");
                     Console.WriteLine("Press any key to retry...");
                     Console.ReadKey();
                 }
-                else
-                {
-                    Console.WriteLine("\nValid Credentials");
-                }
             }
 
-            // After logged in proceed to other Menus
-            Console.WriteLine("Welcome to the system!");
+            // Redirect to other menu based on the role
+            if (role == "Patient")
+            {
+                // If the name is null or empty, replace it with defalut "Patient"
+                if (string.IsNullOrEmpty(name))
+                {
+                    name = "Patient";  
+                }
+
+                Console.Clear();
+
+                // Pass the name to the PatientMenu method
+                Patient.PatientMenu(name);
+            }
+            else
+            {
+                // Need to change this later
+                Console.WriteLine("Welcome to the system!");
+            }
         }
+
 
         // Function to read the password with '*' masking
         private static string GetPassword()
@@ -82,15 +95,14 @@ namespace HMS
         }
 
         // Function to validate the ID and password 
-        private static bool ValidateCredentials(string id, string password)
+        private static (string? name, string? role) ValidateCredentials(string id, string password)
         {
-            string filePath = @"..\..\..\users.txt"; 
+            string filePath = @"..\..\..\users.txt";
             string[] lines = File.ReadAllLines(filePath);
 
             foreach (var line in lines)
             {
                 var parts = line.Split(',');
-                // Check the length in the txt file
                 if (parts.Length == 4)
                 {
                     string validID = parts[0];
@@ -100,12 +112,12 @@ namespace HMS
 
                     if (id == validID && password == validPassword)
                     {
-                        return true;
+                        return (validUsername, validRole);  // Return the name and role
                     }
                 }
             }
 
-            return false;
+            return (null, null);  // Return null if validation fails
         }
     }
 }
