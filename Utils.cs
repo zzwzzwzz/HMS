@@ -204,6 +204,61 @@ namespace HMS
             }
         }
 
+        // Display a list of all available doctors
+        public static void DisplayDoctorList()
+        {
+            string doctorFilePath = @"DoctorsDetail.txt";
+
+            if (!File.Exists(doctorFilePath))
+            {
+                Console.WriteLine("No doctors available in the system.");
+                return;
+            }
+
+            string[] doctorLines = File.ReadAllLines(doctorFilePath);
+            foreach (var line in doctorLines)
+            {
+                var parts = line.Split(',');
+                if (parts.Length == 9)
+                {
+                    Console.WriteLine($"{parts[0]} | {parts[1]} {parts[2]} | {parts[3]} | {parts[4]} | {parts[5]} {parts[6]}, {parts[7]}, {parts[8]}");
+                }
+            }
+        }
+
+        // Validate and get a valid doctor selection
+        public static int GetValidDoctorSelection()
+        {
+            Console.Write("\nPlease choose a doctor (Enter the ID): ");
+            while (true)
+            {
+                if (int.TryParse(Console.ReadLine(), out int doctorSelection) && doctorSelection > 0)
+                {
+                    return doctorSelection;
+                }
+                else
+                {
+                    Console.WriteLine("Invalid input. Please enter a valid number.");
+                }
+            }
+        }
+
+        // Generate a unique Appointment ID
+        private static int currentAppointmentId = 1;  // Initialize starting appointment ID
+        public static int GenerateAppointmentId()
+        {
+            return currentAppointmentId++;
+        }
+
+        // Save appointment to file
+        public static void SaveAppointment(Appointment appointment)
+        {
+            string appointmentFilePath = @"Appointments.txt";
+            string appointmentDetails = $"{appointment.AppointmentID},{appointment.PatientID},{appointment.DoctorID},{appointment.AppointmentDetails}";
+
+            File.AppendAllText(appointmentFilePath, appointmentDetails + Environment.NewLine);
+        }
+
         // Generate the next patient ID, ensuring it's unique
         private static int currentPatientId = 222222;
 
@@ -345,4 +400,3 @@ namespace HMS
         }
     }
 }
-

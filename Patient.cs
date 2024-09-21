@@ -9,11 +9,13 @@ namespace HMS
     public class Patient : Users
     {
         public int PatientID { get; set; }
+        public int? DoctorID { get; set; }  // Nullable to indicate if not registered with any doctor
 
-        public Patient(int patientID, string firstName, string lastName, string email, string phone, string streetNumber, string street, string city, string state)
+        public Patient(int patientID, string firstName, string lastName, string email, string phone, string streetNumber, string street, string city, string state, int? doctorID = null)
             : base(firstName, lastName, email, phone, streetNumber, street, city, state)
         {
             PatientID = patientID;
+            DoctorID = doctorID;
         }
 
         public override string ToString()
@@ -63,8 +65,7 @@ namespace HMS
                         break;
                     case "4":
                         Console.Clear();
-                        Console.WriteLine("Book Appointment:");
-                        // PatientBookAppointment();
+                        currentPatient.PatientBookAppointment();  // Call the new appointment booking function
                         break;
                     case "5":
                         Console.Clear();
@@ -97,6 +98,44 @@ namespace HMS
             Console.WriteLine($"Email: {currentPatient.Email}");
             Console.WriteLine($"Phone: {currentPatient.Phone}");
 
+            Console.WriteLine("\nPress any key to return to the menu...");
+            Console.ReadKey(true);
+        }
+
+        // Function case 4 to book an appointment
+        public void PatientBookAppointment()
+        {
+            // Call the display menu header function from Utils.cs
+            Utils.DisplayMenuHeader("Book Appointment");
+
+            // If not registered with a doctor, prompt to register
+            if (!DoctorID.HasValue)
+            {
+                Console.WriteLine("\nYou are not registered with any doctor! Please choose which doctor you would like to register with:\n");
+                Utils.DisplayDoctorList();  // Displays all available doctors
+
+                int selectedDoctorID = Utils.GetValidDoctorSelection();  // Get a valid doctor selection
+                DoctorID = selectedDoctorID;
+
+                Console.WriteLine($"\nYou are now registered with Doctor ID: {selectedDoctorID}");
+            }
+            else
+            {
+                Console.WriteLine($"\nYou are booking a new appointment with Doctor ID: {DoctorID}");
+            }
+
+            // Proceed with appointment detail
+            Console.Write("\nDescription of the appointment: ");
+            string appointmentDescription = Console.ReadLine() ?? "";
+
+            // Generate a new Appointment ID
+            int newAppointmentID = Utils.GenerateAppointmentId();
+            Appointment newAppointment = new Appointment(newAppointmentID, PatientID, DoctorID.Value, appointmentDescription);
+
+            // Save the appointment details to file
+            Utils.SaveAppointment(newAppointment);
+
+            Console.WriteLine("\nThe appointment has been booked successfully.");
             Console.WriteLine("\nPress any key to return to the menu...");
             Console.ReadKey(true);
         }
