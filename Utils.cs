@@ -24,127 +24,185 @@ namespace HMS
         // Validate the ID and password for both patients and doctors
         public static (string? name, string? role, object? user) ValidateCredentials(string id, string password)
         {
-            string userFilePath = @"Users.txt";
-            string[] lines = File.ReadAllLines(userFilePath);
-
-            // Validate the user from Users.txt
-            foreach (var line in lines)
+            try
             {
-                var parts = line.Split(',');
-                if (parts.Length == 4)
+                string userFilePath = @"Users.txt";
+
+                // Exception handling when files can't be found
+                if (!File.Exists(userFilePath))
                 {
-                    string validID = parts[0];
-                    string validPassword = parts[1];
-                    string validUsername = parts[2];
-                    string validRole = parts[3];
+                    throw new FileNotFoundException("The file does not exist.");
+                }
 
-                    // If the ID and password match
-                    if (id == validID && password == validPassword)
+                string[] lines = File.ReadAllLines(userFilePath);
+
+                // Validate the user from Users.txt
+                foreach (var line in lines)
+                {
+                    var parts = line.Split(',');
+                    if (parts.Length == 4)
                     {
-                        if (validRole == "Patient")
-                        {
-                            // Load the patient details from PatientDetails.txt
-                            Patient? patient = GetPatientDetailsById(validID);
+                        string validID = parts[0];
+                        string validPassword = parts[1];
+                        string validUsername = parts[2];
+                        string validRole = parts[3];
 
-                            if (patient != null)
-                            {
-                                // Return name, role, and patient object
-                                return (validUsername, validRole, patient);
-                            }
-                        }
-                        else if (validRole == "Doctor")
+                        // If the ID and password match
+                        if (id == validID && password == validPassword)
                         {
-                            // Load the doctor details from DoctorsDetail.txt
-                            Doctor? doctor = GetDoctorDetailsById(validID);
+                            if (validRole == "Patient")
+                            {
+                                // Load the patient details from PatientDetails.txt
+                                Patient? patient = GetPatientDetailsById(validID);
 
-                            if (doctor != null)
-                            {
-                                // Return name, role, and doctor object
-                                return (validUsername, validRole, doctor);
+                                if (patient != null)
+                                {
+                                    // Return name, role, and patient object
+                                    return (validUsername, validRole, patient);
+                                }
                             }
-                        }
-                        else
-                        {
-                            // Return name and role for non-patient and non-doctor users
-                            return (validUsername, validRole, null);
+                            else if (validRole == "Doctor")
+                            {
+                                // Load the doctor details from DoctorsDetail.txt
+                                Doctor? doctor = GetDoctorDetailsById(validID);
+
+                                if (doctor != null)
+                                {
+                                    // Return name, role, and doctor object
+                                    return (validUsername, validRole, doctor);
+                                }
+                            }
+                            else
+                            {
+                                // Return name and role for non-patient and non-doctor users
+                                return (validUsername, validRole, null);
+                            }
                         }
                     }
                 }
+
+                // Return null if validation fails
+                return (null, null, null);
             }
-
-            // Return null if validation fails
-            return (null, null, null);
+            catch (FileNotFoundException ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+                return (null, null, null);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An unexpected error occurred: {ex.Message}");
+                return (null, null, null);
+            }
         }
-
 
         // Load patient details from PatientDetails.txt
         public static Patient? GetPatientDetailsById(string id)
         {
-            string patientFilePath = @"PatientsDetail.txt";
-            string[] patientLines = File.ReadAllLines(patientFilePath);
-
-            foreach (var line in patientLines)
+            try
             {
-                var parts = line.Split(',');
-                if (parts.Length == 9)
+                string patientFilePath = @"PatientsDetail.txt";
+                if (!File.Exists(patientFilePath))
                 {
-                    // Check if the patient ID matches
-                    if (parts[0] == id)
+                    throw new FileNotFoundException("The patient details file does not exist.");
+                }
+
+                string[] patientLines = File.ReadAllLines(patientFilePath);
+
+                foreach (var line in patientLines)
+                {
+                    var parts = line.Split(',');
+                    if (parts.Length == 9)
                     {
-                        // Create a Patient object with the details
-                        return new Patient(
-                            int.Parse(parts[0]), // PatientID
-                            parts[1], // FirstName
-                            parts[2], // LastName
-                            parts[3], // Email
-                            parts[4], // Phone
-                            parts[5], // StreetNumber
-                            parts[6], // Street
-                            parts[7], // City
-                            parts[8]  // State
-                        );
+                        // Check if the patient ID matches
+                        if (parts[0] == id)
+                        {
+                            // Create a Patient object with the details
+                            return new Patient(
+                                int.Parse(parts[0]), // PatientID
+                                parts[1], // FirstName
+                                parts[2], // LastName
+                                parts[3], // Email
+                                parts[4], // Phone
+                                parts[5], // StreetNumber
+                                parts[6], // Street
+                                parts[7], // City
+                                parts[8]  // State
+                            );
+                        }
                     }
                 }
-            }
 
-            // Return null if no patient is found with the ID
-            return null;
+                return null; // No match found
+            }
+            catch (FileNotFoundException ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+                return null;
+            }
+            catch (FormatException ex)
+            {
+                Console.WriteLine($"Error parsing patient details: {ex.Message}");
+                return null;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An unexpected error occurred: {ex.Message}");
+                return null;
+            }
         }
 
         // Load doctor details from DoctorsDetail.txt
         public static Doctor? GetDoctorDetailsById(string id)
         {
-            string doctorFilePath = @"DoctorsDetail.txt";
-            string[] doctorLines = File.ReadAllLines(doctorFilePath);
-
-            foreach (var line in doctorLines)
+            try
             {
-                var parts = line.Split(',');
-                if (parts.Length == 9)
+                string doctorFilePath = @"DoctorsDetail.txt";
+                string[] doctorLines = File.ReadAllLines(doctorFilePath);
+
+                foreach (var line in doctorLines)
                 {
-                    // Check if the doctor ID matches
-                    if (parts[0] == id)
+                    var parts = line.Split(',');
+                    if (parts.Length == 9)
                     {
-                        // Create a Doctor object with the details
-                        return new Doctor(
-                            int.Parse(parts[0]), // DoctorID
-                            parts[1], // FirstName
-                            parts[2], // LastName
-                            parts[3], // Email
-                            parts[4], // Phone
-                            parts[5], // StreetNumber
-                            parts[6], // Street
-                            parts[7], // City
-                            parts[8]  // State
-                        );
+                        // Check if the doctor ID matches
+                        if (parts[0] == id)
+                        {
+                            // Create a Doctor object with the details
+                            return new Doctor(
+                                int.Parse(parts[0]), // DoctorID
+                                parts[1], // FirstName
+                                parts[2], // LastName
+                                parts[3], // Email
+                                parts[4], // Phone
+                                parts[5], // StreetNumber
+                                parts[6], // Street
+                                parts[7], // City
+                                parts[8]  // State
+                            );
+                        }
                     }
                 }
+
+                // Return null if no doctor is found with the ID
+                return null;
             }
-
-            // Return null if no doctor is found with the ID
-            return null;
+            catch (FileNotFoundException ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+                return null;
+            }
+            catch (FormatException ex)
+            {
+                Console.WriteLine($"Error parsing details: {ex.Message}");
+                return null;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An unexpected error occurred: {ex.Message}");
+                return null;
+            }
         }
-
 
         // Generate the next patient ID, ensuring it's unique
         private static int currentPatientId = 222222;
