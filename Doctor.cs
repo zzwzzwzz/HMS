@@ -122,7 +122,7 @@ namespace HMS
 
             // First, retrieve all patients linked to this doctor from Appointments.txt
             string appointmentFilePath = @"Appointments.txt";
-            HashSet<string> patientIds = new HashSet<string>();
+            HashSet<string> patientIds = [];
 
             if (File.Exists(appointmentFilePath))
             {

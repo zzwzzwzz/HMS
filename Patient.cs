@@ -222,7 +222,7 @@ namespace HMS
 
             // Generate a new Appointment ID
             int newAppointmentID = Utils.GenerateAppointmentId();
-            Appointment newAppointment = new Appointment(newAppointmentID, PatientID, DoctorID.Value, appointmentDescription);
+            Appointment newAppointment = new (newAppointmentID, PatientID, DoctorID.Value, appointmentDescription);
 
             // Save the appointment details to file
             Utils.SaveAppointment(newAppointment);
