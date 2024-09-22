@@ -102,15 +102,37 @@ namespace HMS
             // Call the display menu header function from Utils.cs
             Utils.DisplayMenuHeader("My Doctor");
 
-            // Check if the patient is registered with a doctor
-            if (!currentPatient.DoctorID.HasValue)
+            // Read Appointments.txt to find if the patient has any appointments
+            string appointmentFilePath = @"Appointments.txt";
+            if (!File.Exists(appointmentFilePath))
+            {
+                Console.WriteLine("\nYou have no appointments and no assigned doctor.");
+                Console.WriteLine("\nPress any key to return to the menu...");
+                Console.ReadKey(true);
+                return;
+            }
+
+            string[] appointmentLines = File.ReadAllLines(appointmentFilePath);
+            int? doctorId = null;
+
+            foreach (var line in appointmentLines)
+            {
+                var parts = line.Split(',');
+                if (parts.Length >= 4 && int.Parse(parts[1]) == currentPatient.PatientID) // Matching PatientID
+                {
+                    doctorId = int.Parse(parts[2]); // Get DoctorID
+                    break; // Assuming we just need one doctor
+                }
+            }
+
+            if (!doctorId.HasValue)
             {
                 Console.WriteLine("\nYou are not currently registered with any doctor.");
             }
             else
             {
                 // Fetch doctor details using DoctorID
-                Doctor? doctor = Utils.GetDoctorDetailsById(currentPatient.DoctorID.Value.ToString());
+                Doctor? doctor = Utils.GetDoctorDetailsById(doctorId.Value.ToString());
 
                 if (doctor != null)
                 {
