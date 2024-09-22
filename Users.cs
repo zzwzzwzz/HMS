@@ -7,30 +7,17 @@ using System.Threading.Tasks;
 
 namespace HMS
 {
-    public class Users
+    public class Users(string firstName, string lastName, string email, string phone, string streetNumber, string street, string city, string state)
     {
-        // Fields to store User information
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Email { get; set; }
-        public string Phone { get; set; }
-        public string StreetNumber { get; set; }
-        public string Street { get; set; }
-        public string City { get; set; }
-        public string State { get; set; }
-
-        // Constructor to initialize the user details
-        public Users(string firstName, string lastName, string email, string phone, string streetNumber, string street, string city, string state)
-        {
-            FirstName = firstName;
-            LastName = lastName;
-            Email = email;
-            Phone = phone;
-            StreetNumber = streetNumber;
-            Street = street;
-            City = city;
-            State = state;
-        }
+        // Fields to store User information; Use primary constructors
+        public string FirstName { get; set; } = firstName;
+        public string LastName { get; set; } = lastName;
+        public string Email { get; set; } = email;
+        public string Phone { get; set; } = phone;
+        public string StreetNumber { get; set; } = streetNumber;
+        public string Street { get; set; } = street;
+        public string City { get; set; } = city;
+        public string State { get; set; } = state;
 
         // Override ToString() to display user details in a formatted string
         public override string ToString()

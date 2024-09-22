@@ -6,15 +6,9 @@ using System.Threading.Tasks;
 
 namespace HMS
 {
-    public class Doctor : Users
+    public class Doctor(int doctorID, string firstName, string lastName, string email, string phone, string streetNumber, string street, string city, string state) : Users(firstName, lastName, email, phone, streetNumber, street, city, state)
     {
-        public int DoctorID { get; set; }
-
-        public Doctor(int doctorID, string firstName, string lastName, string email, string phone, string streetNumber, string street, string city, string state)
-            : base(firstName, lastName, email, phone, streetNumber, street, city, state)
-        {
-            DoctorID = doctorID;
-        }
+        public int DoctorID { get; set; } = doctorID;
 
         public override string ToString()
         {

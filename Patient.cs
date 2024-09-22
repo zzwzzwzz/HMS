@@ -6,17 +6,10 @@ using System.Threading.Tasks;
 
 namespace HMS
 {
-    public class Patient : Users
+    public class Patient(int patientID, string firstName, string lastName, string email, string phone, string streetNumber, string street, string city, string state, int? doctorID = null) : Users(firstName, lastName, email, phone, streetNumber, street, city, state)
     {
-        public int PatientID { get; set; }
-        public int? DoctorID { get; set; }  // If null means not registered with any doctor
-
-        public Patient(int patientID, string firstName, string lastName, string email, string phone, string streetNumber, string street, string city, string state, int? doctorID = null)
-            : base(firstName, lastName, email, phone, streetNumber, street, city, state)
-        {
-            PatientID = patientID;
-            DoctorID = doctorID;
-        }
+        public int PatientID { get; set; } = patientID;
+        public int? DoctorID { get; set; } = doctorID;
 
         public override string ToString()
         {
