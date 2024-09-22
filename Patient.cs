@@ -252,11 +252,22 @@ namespace HMS
 
                 doctorId = selectedDoctorID;
 
-                Console.WriteLine($"\nYou are now registered with Doctor ID: {selectedDoctorID}");
+                Console.WriteLine($"\nYou are now registered with Dr. {doctor.FirstName} {doctor.LastName}");
             }
             else
             {
-                Console.WriteLine($"\nYou are booking a new appointment with Doctor ID: {doctorId}");
+                // Get the doctor's details using doctorId
+                Doctor? doctor = Utils.GetDoctorDetailsById(doctorId.Value.ToString());
+                if (doctor != null)
+                {
+                    Console.WriteLine($"\nYou are booking a new appointment with Dr. {doctor.FirstName} {doctor.LastName}");
+                }
+                else
+                {
+                    Console.WriteLine("\nDoctor information could not be found.");
+                    // Handle the case where the doctor information is missing
+                    return; // Exit the method or handle appropriately
+                }
             }
 
             // Proceed with appointment detail
@@ -282,6 +293,7 @@ namespace HMS
             Console.WriteLine("\nPress any key to return to the menu...");
             Console.ReadKey(true);
         }
+
     }
 }
 

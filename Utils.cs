@@ -215,16 +215,25 @@ namespace HMS
                 return;
             }
 
+            Console.WriteLine("{0,-10} | {1,-20} | {2,-30} | {3,-12} | {4,-40}", "Doctor ID", "Name", "Email", "Phone", "Address");
+            Console.WriteLine(new string('-', 110)); // Divider line
+
             string[] doctorLines = File.ReadAllLines(doctorFilePath);
             foreach (var line in doctorLines)
             {
                 var parts = line.Split(',');
                 if (parts.Length == 9)
                 {
-                    Console.WriteLine($"{parts[0]} | {parts[1]} {parts[2]} | {parts[3]} | {parts[4]} | {parts[5]} {parts[6]}, {parts[7]}, {parts[8]}");
+                    Console.WriteLine("{0,-10} | {1,-20} | {2,-30} | {3,-12} | {4,-40}",
+                        parts[0],
+                        parts[1] + " " + parts[2],
+                        parts[3],
+                        parts[4],
+                        parts[5] + " " + parts[6] + ", " + parts[7] + ", " + parts[8]);
                 }
             }
         }
+
 
         // Validate and get a valid doctor selection
         public static int GetValidDoctorSelection()
@@ -232,9 +241,19 @@ namespace HMS
             Console.Write("\nPlease choose a doctor (Enter the ID): ");
             while (true)
             {
-                if (int.TryParse(Console.ReadLine(), out int doctorSelection) && doctorSelection > 0)
+                string? input = Console.ReadLine();
+                if (int.TryParse(input, out int doctorSelection) && doctorSelection > 0)
                 {
-                    return doctorSelection;
+                    // Verify that the doctor exists in DoctorsDetail.txt
+                    Doctor? doctor = GetDoctorDetailsById(doctorSelection.ToString());
+                    if (doctor != null)
+                    {
+                        return doctorSelection;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Doctor not found. Please enter a valid Doctor ID.");
+                    }
                 }
                 else
                 {
@@ -242,6 +261,7 @@ namespace HMS
                 }
             }
         }
+
 
         // Generate a unique Appointment ID
         public static int GenerateAppointmentId()
