@@ -121,7 +121,7 @@ namespace HMS
                 if (parts.Length >= 4 && int.Parse(parts[1]) == currentPatient.PatientID) // Matching PatientID
                 {
                     doctorId = int.Parse(parts[2]); // Get DoctorID
-                    break; // Assuming we just need one doctor
+                    break; // Assuming there's only one doctor for every patient
                 }
             }
 
@@ -156,7 +156,7 @@ namespace HMS
             Console.ReadKey(true);
         }
 
-        // Case 3: Function to list all appointments for the current patient
+        // Case 3 function to list all appointments for the current patient
         public static void PatientListAppointments(Patient currentPatient)
         {
             Console.Clear();
@@ -273,7 +273,7 @@ namespace HMS
                 {
                     Console.WriteLine("\nDoctor information could not be found.");
                     // Handle the case where the doctor information is missing
-                    return; // Exit the method or handle appropriately
+                    return; // Exit
                 }
             }
 

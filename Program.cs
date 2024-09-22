@@ -7,6 +7,7 @@ namespace HMS
     {
         static void Main(string[] args)
         {
+            // Null exception handling
             ArgumentNullException.ThrowIfNull(args);
 
             bool loggedIn = false;
@@ -15,7 +16,7 @@ namespace HMS
             {
                 string? name = null;
                 string? role = null;
-                object? currentUser = null;  // Can be either Patient or Doctor
+                object? currentUser = null;  // Current user can be either Patient or Doctor
 
                 while (role == null)
                 {

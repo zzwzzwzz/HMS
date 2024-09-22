@@ -69,7 +69,7 @@ namespace HMS
             }
         }
 
-        // Function to list all the doctors information
+        // Case 1 function to list all the doctors information
         public static void ListAllDoctors()
         {
             Console.Clear();
@@ -106,6 +106,7 @@ namespace HMS
             Console.ReadKey(true);
         }
 
+        // Case 2 function to check doctor detail by ID
         public static void CheckDoctorDetail()
         {
             while (true)  // Keep the loop running until 'n' is pressed
@@ -120,7 +121,7 @@ namespace HMS
 
                 if (string.IsNullOrEmpty(input))
                 {
-                    continue;  // If input is empty, re-prompt the user
+                    continue;  // If input is empty, re-prompt to the user
                 }
 
                 if (input.Equals("n", StringComparison.CurrentCultureIgnoreCase))
@@ -147,7 +148,6 @@ namespace HMS
                                 doctor.Email,
                                 doctor.Phone,
                                 doctor.StreetNumber + " " + doctor.Street + ", " + doctor.City + ", " + doctor.State);
-
                             found = true;
                             break;
                         }
@@ -164,7 +164,7 @@ namespace HMS
             }
         }
 
-        // Function to list all the patients information
+        // Case 3 function to list all the patients information
         public static void ListAllPatients()
         {
             Console.Clear();
@@ -204,7 +204,7 @@ namespace HMS
             Console.ReadKey(true);
         }
 
-        // Function to check patient detail according to the input ID
+        // Case 4 function to check patient detail according to the input ID
         public static void CheckPatientDetail()
         {
             while (true)  // Keep the loop running until 'n' is pressed
@@ -259,15 +259,19 @@ namespace HMS
                 }
 
                 Console.WriteLine("\nPress any key to continue...");
-                Console.ReadKey();  // Ensure this is inside the loop to pause after each operation
+                Console.ReadKey(); 
             }
         }
 
-        // Function to add a new doctor
+        // Case 5 function to add a new doctor
         public static void AddDoctor()
         {
             Console.Clear();
-            Console.WriteLine("Registering a new doctor with the DOTNET Hospital Management System:\n");
+
+            // Call the display menu header function from Utils.cs
+            Utils.DisplayMenuHeader("Add New Doctor");
+
+            Console.WriteLine("\nRegistering a new doctor with the DOTNET Hospital Management System:\n");
 
             int doctorID = Utils.GenerateDoctorId(); // Generate a unique doctor ID
             string firstName = Utils.GetNonNullInput("First Name: ");
@@ -288,11 +292,15 @@ namespace HMS
             Console.ReadKey(true);
         }
 
-        // Function to add a new patient
+        // Case 6 function to add a new patient
         public static void AddPatient()
         {
             Console.Clear();
-            Console.WriteLine("Registering a new patient with the DOTNET Hospital Management System:\n");
+
+            // Call the display menu header function from Utils.cs
+            Utils.DisplayMenuHeader("Add New Patient");
+
+            Console.WriteLine("\nRegistering a new patient with the DOTNET Hospital Management System:\n");
 
             int patientID = Utils.GeneratePatientId(); // Generate a unique patient ID
             string firstName = Utils.GetNonNullInput("First Name: ");

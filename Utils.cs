@@ -234,7 +234,6 @@ namespace HMS
             }
         }
 
-
         // Validate and get a valid doctor selection
         public static int GetValidDoctorSelection()
         {
@@ -261,7 +260,6 @@ namespace HMS
                 }
             }
         }
-
 
         // Generate a unique Appointment ID
         public static int GenerateAppointmentId()
@@ -300,7 +298,6 @@ namespace HMS
 
         // Generate the next patient ID, ensuring it's unique
         private static int currentPatientId = 222222;
-
         public static int GeneratePatientId()
         {
             int newId;
@@ -314,7 +311,6 @@ namespace HMS
 
         // Generate the next doctor ID, ensuring it's unique
         private static int currentDoctorId = 333333;
-
         public static int GenerateDoctorId()
         {
             int newId;

@@ -100,7 +100,7 @@ namespace HMS
             Console.ReadKey(true);
         }
 
-        // Case 2 function: Doctor lists all the patients assigned to them using Appointments.txt
+        // Case 2 function Doctor lists all the patients assigned to them using Appointments.txt
         public static void DoctorListPatients(Doctor currentDoctor)
         {
             Console.Clear();
@@ -108,13 +108,13 @@ namespace HMS
             // Call the display menu header function from Utils.cs
             Utils.DisplayMenuHeader("My Patients");
 
-            Console.WriteLine($"Patients assigned to Dr. {currentDoctor.FirstName} {currentDoctor.LastName}:\n");
+            Console.WriteLine($"\nPatients assigned to Dr. {currentDoctor.FirstName} {currentDoctor.LastName}:\n");
 
             // Set headers with fixed-width formatting
             Console.WriteLine("{0,-20} | {1,-30} | {2,-12} | {3,-40}", "Patient", "Email Address", "Phone", "Address");
             Console.WriteLine(new string('-', 110)); // Divider line
 
-            // First, retrieve all patients linked to this doctor from Appointments.txt
+            // Retrieve all patients linked to this doctor from Appointments.txt
             string appointmentFilePath = @"Appointments.txt";
             HashSet<string> patientIds = [];
 
@@ -125,7 +125,7 @@ namespace HMS
                 {
                     var parts = line.Split(',');
 
-                    // If the appointment contains the current doctor's ID, capture the patient's ID
+                    // If the appointment contains the current doctor's ID, get the patient's ID
                     if (parts.Length == 4 && parts[2] == currentDoctor.DoctorID.ToString())
                     {
                         patientIds.Add(parts[1]);  // Add PatientID to the HashSet
@@ -133,7 +133,7 @@ namespace HMS
                 }
             }
 
-            // Now, use the captured PatientIDs to retrieve and display details from PatientsDetail.txt
+            // Use the captured PatientIDs to retrieve and display details from PatientsDetail.txt
             string patientFilePath = @"PatientsDetail.txt";
             if (File.Exists(patientFilePath))
             {
@@ -228,7 +228,7 @@ namespace HMS
             if (string.IsNullOrEmpty(inputID))
             {
                 Console.WriteLine("The patient ID cannot be empty. Please enter a valid ID.");
-                return;  // Or re-prompt the user to enter a valid ID
+                return;  // Re-prompt the user to enter a valid ID
             }
 
             // Validate the patient ID
