@@ -215,29 +215,65 @@ namespace HMS
             // Call the display menu header function from Utils.cs
             Utils.DisplayMenuHeader("Book Appointment");
 
-            // If not registered with a doctor, prompt to register
-            if (!DoctorID.HasValue)
+            int? doctorId = null;
+
+            // Read Appointments.txt to find if the patient has any appointments
+            string appointmentFilePath = @"Appointments.txt";
+            if (File.Exists(appointmentFilePath))
+            {
+                string[] appointmentLines = File.ReadAllLines(appointmentFilePath);
+
+                foreach (var line in appointmentLines)
+                {
+                    var parts = line.Split(',');
+                    if (parts.Length >= 4 && int.Parse(parts[1]) == this.PatientID) // Matching PatientID
+                    {
+                        doctorId = int.Parse(parts[2]); // Get DoctorID
+                        break; // Assuming we just need one doctor
+                    }
+                }
+            }
+
+            if (!doctorId.HasValue)
             {
                 Console.WriteLine("\nYou are not registered with any doctor! Please choose which doctor you would like to register with:\n");
                 Utils.DisplayDoctorList();  // Displays all available doctors
 
                 int selectedDoctorID = Utils.GetValidDoctorSelection();  // Get a valid doctor selection
-                DoctorID = selectedDoctorID;
+
+                // Verify if the doctor exists in DoctorsDetail.txt
+                Doctor? doctor = Utils.GetDoctorDetailsById(selectedDoctorID.ToString());
+                while (doctor == null)
+                {
+                    Console.WriteLine("Doctor not found. Please enter a valid Doctor ID.");
+                    selectedDoctorID = Utils.GetValidDoctorSelection();
+                    doctor = Utils.GetDoctorDetailsById(selectedDoctorID.ToString());
+                }
+
+                doctorId = selectedDoctorID;
 
                 Console.WriteLine($"\nYou are now registered with Doctor ID: {selectedDoctorID}");
             }
             else
             {
-                Console.WriteLine($"\nYou are booking a new appointment with Doctor ID: {DoctorID}");
+                Console.WriteLine($"\nYou are booking a new appointment with Doctor ID: {doctorId}");
             }
 
             // Proceed with appointment detail
-            Console.Write("\nDescription of the appointment: ");
-            string appointmentDescription = Console.ReadLine() ?? "";
+            string appointmentDescription = "";
+            do
+            {
+                Console.Write("\nDescription of the appointment: ");
+                appointmentDescription = Console.ReadLine() ?? "";
+                if (string.IsNullOrWhiteSpace(appointmentDescription))
+                {
+                    Console.WriteLine("Description cannot be empty. Please enter a description.");
+                }
+            } while (string.IsNullOrWhiteSpace(appointmentDescription));
 
             // Generate a new Appointment ID
             int newAppointmentID = Utils.GenerateAppointmentId();
-            Appointment newAppointment = new (newAppointmentID, PatientID, DoctorID.Value, appointmentDescription);
+            Appointment newAppointment = new(newAppointmentID, PatientID, doctorId.Value, appointmentDescription);
 
             // Save the appointment details to file
             Utils.SaveAppointment(newAppointment);
