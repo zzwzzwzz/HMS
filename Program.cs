@@ -73,6 +73,16 @@ namespace HMS
                     // Pass the doctor object to the DoctorMenu method
                     Doctor.DoctorMenu(currentDoctor);
                 }
+                else if (role == "Receptionist")
+                {
+                    if (string.IsNullOrEmpty(name))
+                    {
+                        name = "Receptionist";
+                    }
+
+                    Console.Clear();
+                    Receptionist.ReceptionistMenu(name);
+                }
             }
         }
 
