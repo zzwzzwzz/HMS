@@ -9,7 +9,7 @@ namespace HMS
     public class Patient : Users
     {
         public int PatientID { get; set; }
-        public int? DoctorID { get; set; }  // Nullable to indicate if not registered with any doctor
+        public int? DoctorID { get; set; }  // If null means not registered with any doctor
 
         public Patient(int patientID, string firstName, string lastName, string email, string phone, string streetNumber, string street, string city, string state, int? doctorID = null)
             : base(firstName, lastName, email, phone, streetNumber, street, city, state)
@@ -55,13 +55,11 @@ namespace HMS
                         break;
                     case "2":
                         Console.Clear();
-                        Console.WriteLine("Doctor Details:");
-                        // PatientListDoctorDetail();
+                        PatientListDoctorDetail(currentPatient);
                         break;
                     case "3":
                         Console.Clear();
-                        Console.WriteLine("All Appointments:");
-                        // PatientListAppointments();
+                        PatientListAppointments(currentPatient);
                         break;
                     case "4":
                         Console.Clear();
@@ -101,6 +99,99 @@ namespace HMS
             Console.WriteLine("\nPress any key to return to the menu...");
             Console.ReadKey(true);
         }
+
+        // Case 2: Function to list the doctor details for the logged-in patient
+        public static void PatientListDoctorDetail(Patient currentPatient)
+        {
+            Console.Clear();
+
+            // Call the display menu header function from Utils.cs
+            Utils.DisplayMenuHeader("My Doctor");
+
+            // Check if the patient is registered with a doctor
+            if (!currentPatient.DoctorID.HasValue)
+            {
+                Console.WriteLine("\nYou are not currently registered with any doctor.");
+            }
+            else
+            {
+                // Fetch doctor details using DoctorID
+                Doctor? doctor = Utils.GetDoctorDetailsById(currentPatient.DoctorID.Value.ToString());
+
+                if (doctor != null)
+                {
+                    // Display the doctor details in a compressed line format
+                    Console.WriteLine($"\nYour doctor:");
+                    Console.WriteLine("{0,-20} | {1,-30} | {2,-12} | {3,-40}", "Name", "Email Address", "Phone", "Address");
+                    Console.WriteLine(new string('-', 110));
+                    Console.WriteLine("{0,-20} | {1,-30} | {2,-12} | {3,-40}",
+                        doctor.FirstName + " " + doctor.LastName,
+                        doctor.Email,
+                        doctor.Phone,
+                        doctor.StreetNumber + " " + doctor.Street + ", " + doctor.City + ", " + doctor.State);
+                }
+                else
+                {
+                    Console.WriteLine("\nDoctor information could not be found.");
+                }
+            }
+
+            Console.WriteLine("\nPress any key to return to the menu...");
+            Console.ReadKey(true);
+        }
+
+        // Case 3: Function to list all appointments for the current patient
+        public static void PatientListAppointments(Patient currentPatient)
+        {
+            Console.Clear();
+
+            // Call the display menu header function from Utils.cs
+            Utils.DisplayMenuHeader("My Appointments");
+
+            // Open and read the Appointments.txt file
+            string appointmentFilePath = @"Appointments.txt";
+            if (!File.Exists(appointmentFilePath))
+            {
+                Console.WriteLine("No appointments found.");
+                Console.ReadKey();
+                return;
+            }
+
+            string[] appointmentLines = File.ReadAllLines(appointmentFilePath);
+            bool foundAppointments = false;
+
+            Console.WriteLine($"Appointments for {currentPatient.FirstName} {currentPatient.LastName}\n");
+            Console.WriteLine("{0,-20} | {1,-20} | {2,-30}", "Doctor", "Patient", "Description");
+            Console.WriteLine(new string('-', 80));
+
+            foreach (var line in appointmentLines)
+            {
+                var parts = line.Split(',');
+                if (parts.Length == 4 && int.Parse(parts[1]) == currentPatient.PatientID) // Matching PatientID
+                {
+                    // Fetch doctor details using DoctorID
+                    Doctor? doctor = Utils.GetDoctorDetailsById(parts[2]);
+
+                    if (doctor != null)
+                    {
+                        Console.WriteLine("{0,-20} | {1,-20} | {2,-30}",
+                            doctor.FirstName + " " + doctor.LastName,
+                            currentPatient.FirstName + " " + currentPatient.LastName,
+                            parts[3]); // Appointment description
+                        foundAppointments = true;
+                    }
+                }
+            }
+
+            if (!foundAppointments)
+            {
+                Console.WriteLine("No appointments found for the current patient.");
+            }
+
+            Console.WriteLine("\nPress any key to return to the menu...");
+            Console.ReadKey(true);
+        }
+
 
         // Function case 4 to book an appointment
         public void PatientBookAppointment()
