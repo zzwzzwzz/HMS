@@ -63,7 +63,8 @@ namespace HMS
                         break;
                     case "4":
                         Console.Clear();
-                        currentPatient.PatientBookAppointment();  // Call the new appointment booking function
+                        // Call the new appointment booking function
+                        currentPatient.PatientBookAppointment();  
                         break;
                     case "5":
                         Console.Clear();
