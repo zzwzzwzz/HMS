@@ -7,6 +7,8 @@ namespace HMS
     {
         static void Main(string[] args)
         {
+            ArgumentNullException.ThrowIfNull(args);
+
             bool loggedIn = false;
 
             while (!loggedIn)
