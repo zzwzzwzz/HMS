@@ -214,6 +214,8 @@ namespace HMS
         // Case 4 Doctor check particular patient through ID
         public static void DoctorCheckPatient(Doctor currentDoctor)
         {
+            ArgumentNullException.ThrowIfNull(currentDoctor);
+
             Console.Clear();
 
             // Call the display menu header function from Utils.cs

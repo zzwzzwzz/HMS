@@ -208,10 +208,17 @@ namespace HMS
             Console.ReadKey(true);
         }
 
-
-        // Function case 4 to book an appointment
         public void PatientBookAppointment()
         {
+            PatientBookAppointment("");
+        }
+
+
+        // Function case 4 to book an appointment
+        public void PatientBookAppointment(string appointmentDescription)
+        {
+            ArgumentNullException.ThrowIfNull(appointmentDescription);
+
             // Call the display menu header function from Utils.cs
             Utils.DisplayMenuHeader("Book Appointment");
 
@@ -270,8 +277,6 @@ namespace HMS
                 }
             }
 
-            // Proceed with appointment detail
-            string appointmentDescription = "";
             do
             {
                 Console.Write("\nDescription of the appointment: ");
