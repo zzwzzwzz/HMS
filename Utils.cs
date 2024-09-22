@@ -244,10 +244,29 @@ namespace HMS
         }
 
         // Generate a unique Appointment ID
-        private static int currentAppointmentId = 1;  // Initialize starting appointment ID
         public static int GenerateAppointmentId()
         {
-            return currentAppointmentId++;
+            int maxId = 0;
+            string appointmentFilePath = @"Appointments.txt";
+
+            if (File.Exists(appointmentFilePath))
+            {
+                string[] appointmentLines = File.ReadAllLines(appointmentFilePath);
+
+                foreach (var line in appointmentLines)
+                {
+                    var parts = line.Split(',');
+                    if (parts.Length > 0 && int.TryParse(parts[0], out int existingId))
+                    {
+                        if (existingId > maxId)
+                        {
+                            maxId = existingId;
+                        }
+                    }
+                }
+            }
+
+            return maxId + 1;
         }
 
         // Save appointment to file
