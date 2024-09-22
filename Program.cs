@@ -54,34 +54,22 @@ namespace HMS
                     {
                         name = "Admin";
                     }
+
                     Console.Clear();
                     Admin.AdminMenu(name);
                 }
                 else if (role == "Patient" && currentUser is Patient currentPatient)
                 {
-                    if (string.IsNullOrEmpty(name))
-                    {
-                        name = "Patient";
-                    }
-
                     Console.Clear();
                     // Pass the patient object to the PatientMenu method
                     Patient.PatientMenu(currentPatient);
                 }
                 else if (role == "Doctor" && currentUser is Doctor currentDoctor)
                 {
-                    if (string.IsNullOrEmpty(name))
-                    {
-                        name = "Doctor";
-                    }
-
                     Console.Clear();
                     // Pass the doctor object to the DoctorMenu method
                     Doctor.DoctorMenu(currentDoctor);
                 }
-
-                // After exiting from the menu, reset the role to null to show the login again.
-                role = null;
             }
         }
 

@@ -65,7 +65,7 @@ namespace HMS
                     case "6":
                         Console.Clear();
                         // Return to login
-                        exit = true;
+                        // exit = true;
                         return;
                     case "7":
                         // Exit the program

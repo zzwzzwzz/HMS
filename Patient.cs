@@ -61,7 +61,7 @@ namespace HMS
                         break;
                     case "5":
                         Console.Clear();
-                        exit = true;
+                        // exit = true;
                         return;
                     case "6":
                         // Exit the program

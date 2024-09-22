@@ -57,7 +57,7 @@ namespace HMS
                         AddPatient();
                         break;
                     case "7":
-                        exit = true; // Logout and return to the login screen
+                        // exit = true; // Logout and return to the login screen
                         return;
                     case "8":
                         Environment.Exit(0);  // Exit the program
@@ -123,7 +123,7 @@ namespace HMS
                     continue;  // If input is empty, re-prompt the user
                 }
 
-                if (input.ToLower() == "n")
+                if (input.Equals("n", StringComparison.CurrentCultureIgnoreCase))
                 {
                     return;  // Exit to the menu
                 }
@@ -222,7 +222,7 @@ namespace HMS
                     continue;  // If input is empty, re-prompt the user
                 }
 
-                if (input.ToLower() == "n")
+                if (input.Equals("n", StringComparison.CurrentCultureIgnoreCase))
                 {
                     return;  // Exit to the menu
                 }
